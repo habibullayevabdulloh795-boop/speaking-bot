@@ -2,6 +2,7 @@ import os
 import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiohttp import web
 
@@ -14,7 +15,7 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    builder = types.InlineKeyboardBuilder()
+    builder = InlineKeyboardBuilder()
     builder.row(types.InlineKeyboardButton(text="🌐 Open App (Speaking Platforma)", web_app=types.WebAppInfo(url=WEBHOOK_URL)))
     builder.row(types.InlineKeyboardButton(text="🎓 Full Mock Speaking (20 ta)", callback_data="full_mock"))
     builder.row(types.InlineKeyboardButton(text="🧩 Alohida Partlar (1.1, 1.2, 2...)", callback_data="parts"))
@@ -47,7 +48,6 @@ def main():
     app = web.Application()
     app.router.add_get('/', handle_index)
     
-    # Webhook handler for Telegram bot
     webhook_requests_handler = SimpleRequestHandler(
         dispatcher=dp,
         bot=bot,
