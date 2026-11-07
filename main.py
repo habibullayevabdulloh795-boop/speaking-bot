@@ -32,7 +32,24 @@ async def cmd_start(message: types.Message):
 
 @dp.callback_query()
 async def callback_handler(callback: types.CallbackQuery):
-    await callback.message.answer("Tanlangan bo'lim tez orada ishga tushadi 🚀")
+    data = callback.data
+    
+    if data == "full_mock":
+        text = "🎓 **Full Mock Speaking:** 20 ta to'liq imtihon testi tayyorlanmoqda. Saytimiz orqali to'liq topshirishingiz mumkin!"
+    elif data == "parts":
+        text = "🧩 **Alohida Partlar:** Part 1, Part 2 va Part 3 savollari bo'yicha mashq qilish uchun Mini App'ga kiring."
+    elif data == "ai_chat":
+        text = "🤖 **AI bilan Gaplashish:** Sun'iy intellekt siz bilan ingliz tilida suhbatlashib, xatolaringizni to'g'rilaydi."
+    elif data == "results":
+        text = "📊 **Darajam va Natijalarim:** Hozirgi CEFR darajangiz va olingan ballaringiz tarixi tez orada chiqadi."
+    elif data == "idioms":
+        text = "💡 **C1 Idiomalar va Maslahatlar:**\n• *A blessing in disguise* — Yomon ko'ringan, lekin oxiri yaxshilikka olib keladigan holat.\n• *Hit the nail on the head* — Ayn巌 topib gapirmoq."
+    elif data == "admin":
+        text = "📞 **Admin bilan bog'lanish:** Savollar bo'yicha @wty_12 ga murojaat qiling."
+    else:
+        text = "Tanlangan bo'lim tez orada ishga tushadi 🚀"
+
+    await callback.message.answer(text, parse_mode="Markdown")
     await callback.answer()
 
 async def handle_index(request):
