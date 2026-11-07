@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import ReplyKeyboardRemove
 
-TOKEN = "9277763375:AAFATLXlY1EMpFMfVtnN5csSjtQUjlH-HZc"
+TOKEN = "9277763375:AAERJcrUV7du3pQPmhohGVnEOvdlSFVJ72Y"
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TOKEN)
