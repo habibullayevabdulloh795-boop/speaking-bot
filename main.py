@@ -11,13 +11,11 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# /start bosganda barcha menyularni chiqarish
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     builder = types.InlineKeyboardBuilder()
     web_app_url = "https://speaking-bot-wakv.onrender.com"
     
-    # Barcha asosiy menyular
     builder.row(types.InlineKeyboardButton(text="🌐 Open App (Speaking Platforma)", web_app=types.WebAppInfo(url=web_app_url)))
     builder.row(types.InlineKeyboardButton(text="🎓 Full Mock Speaking (20 ta)", callback_data="full_mock"))
     builder.row(types.InlineKeyboardButton(text="🧩 Alohida Partlar (1.1, 1.2, 2...)", callback_data="parts"))
@@ -37,7 +35,6 @@ async def callback_handler(callback: types.CallbackQuery):
     await callback.message.answer("Tanlangan bo'lim tez orada ishga tushadi 🚀")
     await callback.answer()
 
-# Veb-server (Open App uchun index.html ni ochadi)
 async def handle_index(request):
     try:
         return web.FileResponse('index.html')
