@@ -11,33 +11,30 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# 1. /start bosganda darajalar va Open App tugmasini chiqarish
+# 1. /start bosganda to'liq menyuni chiqarish
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     builder = types.InlineKeyboardBuilder()
     web_app_url = "https://speaking-bot-wakv.onrender.com"
     
-    # Tugmalarni xuddi o'sha ikkinchi skrinshotdagidek qilib joylaymiz
-    builder.row(
-        types.InlineKeyboardButton(text="🟢 A2", callback_data="level_A2"),
-        types.InlineKeyboardButton(text="🔵 B1", callback_data="level_B1")
-    )
-    builder.row(
-        types.InlineKeyboardButton(text="🟠 B2", callback_data="level_C1"), # xohlasangiz moslab olasiz
-        types.InlineKeyboardButton(text="🔥 C1", callback_data="level_C1")
-    )
-    builder.row(
-        types.InlineKeyboardButton(text="🚀 Open App (Speaking Platforma)", web_app=types.WebAppInfo(url=web_app_url))
-    )
+    # To'liq menyu tugmalari
+    builder.row(types.InlineKeyboardButton(text="🌐 Open App (Speaking Platforma)", web_app=types.WebAppInfo(url=web_app_url)))
+    builder.row(types.InlineKeyboardButton(text="🎓 Full Mock Speaking (20 ta)", callback_data="full_mock"))
+    builder.row(types.InlineKeyboardButton(text="🧩 Alohida Partlar (1.1, 1.2, 2...)", callback_data="parts"))
+    builder.row(types.InlineKeyboardButton(text="🤖 AI bilan Gaplashish (Limi...", callback_data="ai_chat"))
+    builder.row(types.InlineKeyboardButton(text="📊 Darajam va Natijalarim (...", callback_data="results"))
+    builder.row(types.InlineKeyboardButton(text="💡 C1 Idiomalar va Maslahatlar", callback_data="idioms"))
+    builder.row(types.InlineKeyboardButton(text="📞 Admin bilan Bog'lanish", callback_data="admin"))
     
     await message.answer(
-        "Assalomu alaykum, Abdulloh!\nSpeaking mashg'ulot botiga xush kelibsiz.\n\nTayyorgarlik ko'rmoqchi bo'lgan darajangizni tanlang:",
-        reply_markup=builder.as_markup()
+        f"Assalomu alaykum, __{message.from_user.first_name}__!\nSpeaking mashg'ulot botiga xush kelibsiz.\n\nQuyidagi bo'limlardan birini tanlang:",
+        reply_markup=builder.as_markup(),
+        parse_mode="Markdown"
     )
 
 @dp.callback_query()
 async def callback_handler(callback: types.CallbackQuery):
-    await callback.message.answer(f"Siz darajani tanladingiz! Endi 'Open App' tugmasi orqali platformaga kiring 🚀")
+    await callback.message.answer("Tanlangan bo'lim tez orada ishga tushadi 🚀")
     await callback.answer()
 
 # 2. Render uchun veb-server (Open App bosganda index.html ni ochadi)
