@@ -11,18 +11,18 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# 1. /start bosganda to'liq menyuni chiqarish
+# 1. Telegram bot: /start bosganda barcha kerakli menyularni chiqarish
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     builder = types.InlineKeyboardBuilder()
     web_app_url = "https://speaking-bot-wakv.onrender.com"
     
-    # To'liq menyu tugmalari
+    # Barcha asosiy menyu tugmalari
     builder.row(types.InlineKeyboardButton(text="🌐 Open App (Speaking Platforma)", web_app=types.WebAppInfo(url=web_app_url)))
     builder.row(types.InlineKeyboardButton(text="🎓 Full Mock Speaking (20 ta)", callback_data="full_mock"))
     builder.row(types.InlineKeyboardButton(text="🧩 Alohida Partlar (1.1, 1.2, 2...)", callback_data="parts"))
-    builder.row(types.InlineKeyboardButton(text="🤖 AI bilan Gaplashish (Limi...", callback_data="ai_chat"))
-    builder.row(types.InlineKeyboardButton(text="📊 Darajam va Natijalarim (...", callback_data="results"))
+    builder.row(types.InlineKeyboardButton(text="🤖 AI bilan Gaplashish", callback_data="ai_chat"))
+    builder.row(types.InlineKeyboardButton(text="📊 Darajam va Natijalarim", callback_data="results"))
     builder.row(types.InlineKeyboardButton(text="💡 C1 Idiomalar va Maslahatlar", callback_data="idioms"))
     builder.row(types.InlineKeyboardButton(text="📞 Admin bilan Bog'lanish", callback_data="admin"))
     
@@ -37,7 +37,7 @@ async def callback_handler(callback: types.CallbackQuery):
     await callback.message.answer("Tanlangan bo'lim tez orada ishga tushadi 🚀")
     await callback.answer()
 
-# 2. Render uchun veb-server (Open App bosganda index.html ni ochadi)
+# 2. Veb-server: brauzerdan yoki Mini App'dan kirganda to'g'ridan-to'g'ri index.html ni ochadi
 async def handle_index(request):
     try:
         return web.FileResponse('index.html')
